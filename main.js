@@ -53,7 +53,7 @@ let scene = new Scene(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 // Drawing Workspace
 // ===========================================================
 // execute main from each logic scripts
-template.main();
+//template.main();
 scene.main();
 
 // draw changes to canvas
