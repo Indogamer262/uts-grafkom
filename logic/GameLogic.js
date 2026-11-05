@@ -18,17 +18,19 @@ export default class Template {
 
     main() {
         // MERESET GRID MENJADI 0
+        let initGame = (grid, width, height) => {
+            this.score = 0;
+            this.status = "PLAYING";
+            for (let spawnRandomtile = 0; spawnRandomtile < 2; spawnRandomtile++) {
+                this.cgl.randomInt(1,10) <= 9 ? 2 : 4;
+                spawnRandomTile(this.grid, this.width, this.height);
+            }
+        } 
         initGame(this.grid, this.width, this.height);
-        this.score = 0;
-        this.status = "PLAYING";
-        for (spawnRandomTile = 0; spawnRandomTile < 2; spawnRandomTile++) {
-            this.cgl.randomInt(1,10) <= 9 ? 2 : 4;
-            spawnRandomTile(this.grid, this.width, this.height);
-        }
 
         // MENCARI SEMUA KOORDINAT YANG MASIH KOSONG
-        spawnRandomTile = this.cgl.randomInt(1, 10) <= 9 ? 2 : 4; 
-        emptyCells = []; 
+        let spawnRandomTile = this.cgl.randomInt(1, 10) <= 9 ? 2 : 4; 
+        let emptyCells = []; 
         this.cgl.randomInt(0, emptyCells.length - 1);
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
@@ -39,7 +41,7 @@ export default class Template {
         }
 
         //FUNGSI INTI GAMEBOY 2048 PER 1 BARIS
-        slideAndMergeRow = (row) => {
+        let slideAndMergeRow = (row) => {
             let newRow = row.filter((val) => val != 0);
             for (let i = 0; i < newRow.length - 1; i++) {
                 if (newRow[i] == newRow[i + 1]) {
@@ -52,19 +54,29 @@ export default class Template {
         }
 
         //FUNGSI GESER SELURUH PAPAN SESUAI DENGAN ARAH YANG DIINGINKAN
-        move = (direction) => {
+        let move = (direction) => {
             spawnRandomTile = this.cgl.randomInt(1, 10) <= 9 ? 2 : 4;
             checkGameStatus();
-            triggerButton = document.getElementById("restartBtn");
+            let triggerButton = document.getElementById("restartBtn");
         }
 
         //CEK GAME STATUS APAKAH WIN ATAU GAME OVER
-        checkGameStatus = () => { 
+        let checkGameStatus = () => { 
             if (this.score >= 2048) {
                 this.status = "WIN";
             } else {
                 this.status = "GAME OVER"; 
             } 
-        } 
+        }
+
+        //MENGHUBUNGKAN 5 TOMBOL YANG ADA DI INDEX.HTML DENGAN FUNGSI YANG ADA DI ATAS
+        let bindInputs = () => {
+            document.getElementById("upBtn").addEventListener("click", () => move("up"));
+            document.getElementById("downBtn").addEventListener("click", () => move("down"));
+            document.getElementById("leftBtn").addEventListener("click", () => move("left"));
+            document.getElementById("rightBtn").addEventListener("click", () => move("right"));
+            document.getElementById("restartBtn").addEventListener("click", () => initGame(this.grid, this.width, this.height));
+        }
+        bindInputs();
     }
 }
