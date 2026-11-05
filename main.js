@@ -45,7 +45,7 @@ let template = new Template(canvas_handler.width, canvas_handler.height, image_d
 // ===========================================================
 // Drawing Workspace
 // ===========================================================
-template.main();
+//template.main();
 
 // draw changes to canvas
 context.putImageData(image_data, 0, 0);
