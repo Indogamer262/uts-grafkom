@@ -1,0 +1,97 @@
+<!-- UTS Grafika Komputer
+    * 2472007 - Richard Vincentius Christian Dinata
+    * 2472008 - Christian Anthony Hermawan
+    * 2472018 - Kevin Kornelius Martadinata
+    * 2472029 - Henry Ferdynand Budiana
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UTS Grafika Komputer</title>
+	
+	<style>
+		canvas {
+			border: 2px solid black;
+			margin: 0 auto;
+		}
+        .coords-input {
+            width: 80px;
+        }
+
+        .controller-container {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items:center;
+        }
+
+        .dpad-container {
+            grid-template-areas:
+                "e1 up e2"
+                "left e3 right"
+                "e4 down e5";
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            text-align:center;
+        }
+        .dpad-container > div > img {
+            width:80px;
+        }
+
+        .gameWidth {
+            width: 600px;
+        }
+
+        .btn-style {
+            background: beige;
+            border: 1px solid black;
+            padding: 10px;
+            cursor: pointer;
+        }
+	</style>
+</head>
+<body>
+	<div>
+		<h3>UTS Grafika Komputer</h3>
+	</div>
+    
+    <canvas id="mycanvas" width="600px" height="500px"></canvas><br>
+    
+    <!-- Ini controllernya kyk gini, inget aja tombolnya ada 5
+         ID-nya tuh ini:
+            * upBtn
+            * rightBtn
+            * downBtn
+            * leftBtn
+            * restartBtn
+         jadi yah pokoknya ada -Btn-nya semua, bisa lah yah kev bikin logicnya -->
+
+    <div class="gameWidth controller-container">
+        <!-- ini bagian buat yang d-pad ges -->
+        <div style="margin-top:10px; display:grid;" class="dpad-container">
+            <div style="rotate:0deg; grid-area:up;" id="upBtn">
+                <img src="assets/panah_hideung.png" />
+            </div>
+            <div style="rotate:90deg; grid-area:right;" id="rightBtn">
+                <img src="assets/panah_hideung.png" />
+            </div>
+            <div style="rotate:180deg; grid-area:down;" id="downBtn">
+                <img src="assets/panah_hideung.png" />
+            </div>
+            <div style="rotate:270deg; grid-area:left;" id="leftBtn">
+                <img src="assets/panah_hideung.png" />
+            </div>
+        </div>
+
+        <!-- klo ini buat tombol yg lain kyk reset -->
+        <div>
+            <div class="btn-style" id="restartBtn">
+                Restart Game
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
