@@ -1,10 +1,21 @@
 // Main files for integrating the whole modules
 
+// ===========================================================
+// LIBRARY INTEGRATION
+// ===========================================================
 // import * as cgl from "./ChrisGL.js";
 import ChelseaGL from "./lib/ChrisGL.js";
 import ChelseaMatrix from "./lib/ChelseaMatrix.js"
 import * as std from "./lib/std.js"
 
+// ===========================================================
+// LOGIC INTEGRATION
+// ===========================================================
+
+
+// ===========================================================
+// CANVAS DEFINITION
+// ===========================================================
 const canvas_handler = document.querySelector("#mycanvas");
 const context = canvas_handler.getContext("2d");
 
@@ -15,21 +26,16 @@ const image_data = context.getImageData(
     canvas_handler.height,
 );
 
+// ===========================================================
+// LIBRARY OBJECT DECLARATION
+// ===========================================================
 let cgl = new ChelseaGL(canvas_handler.width, canvas_handler.height, image_data);
 let cmx = new ChelseaMatrix();
-function clearCanvas() {
-    cgl.kotak(0,0,canvas_handler.width,canvas_handler.height,{r:255,g:255,b:255});
-}
-clearCanvas();
-function clearCanvasLocal(x,y,w,h) {
-    cgl.kotak(x,y,w,h,{r:255,g:255,b:255});
-}
+cgl.clearCanvas();
 
 // ===========================================================
 // Drawing Workspace
 // ===========================================================
-// COLOR DEFINITION
-
 // POLYGON SHAPE DEFINITION
 const kapalBox = [
     [265,375],[335,375],
