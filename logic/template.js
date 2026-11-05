@@ -16,5 +16,11 @@ export default class Template {
         // SAMPLE CODE UNTUK GAMBAR KOTAK WARNA HITAM
         this.cgl.kotak(0,0,30,30,std.color.black);
         this.context.putImageData(this.image_data, 0, 0);
+
+        // SAMPLE CODE UNTUK MENGGUNAKAN BUTTON
+        let triggerButton = document.getElementById("restartBtn");
+        triggerButton.addEventListener("click", function() {
+            console.log("Ok batman");
+        })
     }
 }
