@@ -25,6 +25,7 @@ import * as std from "./lib/std.js"
 // LOGIC INTEGRATION
 // ===========================================================
 import Template from "./logic/template.js"
+import Scene from "./logic/Scene.js"
 
 // ===========================================================
 // OBJECT DECLARATION
@@ -34,18 +35,26 @@ let cgl = new ChelseaGL(canvas_handler.width, canvas_handler.height, image_data)
 let cmx = new ChelseaMatrix();
 cgl.clearCanvas();
 
-// Libraries Compact Var
-const lib = {
-    cgl:cgl,
-    cmx:cmx
+// la stands for Logic Arguments
+const la = {
+    cw: canvas_handler.width,
+    ch: canvas_handler.height,
+    imgd: image_data,
+    ctx: context,
+    lib: {cgl:cgl,
+          cmx:cmx}
 }
 
-let template = new Template(canvas_handler.width, canvas_handler.height, image_data, context, lib);
+// Create objects for each logic script
+let template = new Template(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+let scene = new Scene(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 
 // ===========================================================
 // Drawing Workspace
 // ===========================================================
-//template.main();
+// execute main from each logic scripts
+template.main();
+scene.main();
 
 // draw changes to canvas
 context.putImageData(image_data, 0, 0);
