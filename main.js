@@ -1,19 +1,6 @@
 // Main files for integrating the whole modules
 
 // ===========================================================
-// LIBRARY INTEGRATION
-// ===========================================================
-// import * as cgl from "./ChrisGL.js";
-import ChelseaGL from "./lib/ChrisGL.js";
-import ChelseaMatrix from "./lib/ChelseaMatrix.js"
-import * as std from "./lib/std.js"
-
-// ===========================================================
-// LOGIC INTEGRATION
-// ===========================================================
-
-
-// ===========================================================
 // CANVAS DEFINITION
 // ===========================================================
 const canvas_handler = document.querySelector("#mycanvas");
@@ -27,34 +14,38 @@ const image_data = context.getImageData(
 );
 
 // ===========================================================
-// LIBRARY OBJECT DECLARATION
+// LIBRARY INTEGRATION
 // ===========================================================
+// import * as cgl from "./ChrisGL.js";
+import ChelseaGL from "./lib/ChrisGL.js";
+import ChelseaMatrix from "./lib/ChelseaMatrix.js"
+import * as std from "./lib/std.js"
+
+// ===========================================================
+// LOGIC INTEGRATION
+// ===========================================================
+import Template from "./logic/template.js"
+
+// ===========================================================
+// OBJECT DECLARATION
+// ===========================================================
+// Libraries Object
 let cgl = new ChelseaGL(canvas_handler.width, canvas_handler.height, image_data);
 let cmx = new ChelseaMatrix();
 cgl.clearCanvas();
 
+// Libraries Compact Var
+const lib = {
+    cgl:cgl,
+    cmx:cmx
+}
+
+let template = new Template(canvas_handler.width, canvas_handler.height, image_data, context, lib);
+
 // ===========================================================
 // Drawing Workspace
 // ===========================================================
-// POLYGON SHAPE DEFINITION
-const kapalBox = [
-    [265,375],[335,375],
-    [335,400],[265,400]
-]
-const tiangKapal = [
-    [296,375],[304,375],
-    [304,300],[296,300]
-]
-const benderaKapal = [
-    [304,300],[304,320],
-    [335,310]
-]
-let kapalBoxDecoy = kapalBox;
-let tiangKapalDecoy = tiangKapal;
-let benderaKapalDecoy = benderaKapal;
-
-// DRAWING BEGIN HERE
-
+template.main();
 
 // draw changes to canvas
 context.putImageData(image_data, 0, 0);
