@@ -2,7 +2,7 @@
 
 import * as std from "../lib/std.js"
 
-export default class Template {
+export default class GameLogic {
     constructor(newWidth, newHeight, image_data, context, lib) {
         this.width = newWidth;
         this.height = newHeight;
