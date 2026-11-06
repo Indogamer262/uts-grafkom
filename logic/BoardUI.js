@@ -1,0 +1,61 @@
+// 2472018 - Kevin Kornelius Martadinata
+import * as std from "../lib/std.js"
+
+export default class BoardUI {
+    constructor(newWidth, newHeight, image_data, context, lib) {
+        this.width = newWidth;
+        this.height = newHeight;
+        this.image_data = image_data;
+        this.context = context;
+        this.cgl = lib.cgl;
+        this.cmx = lib.cmx;
+
+        this.boardX = 50;
+        this.boardY = 50;
+        this.boardSize = 400;
+        this.cellSize = 85;
+        this.gap = 12;
+    }
+
+    // menentukan warna tile
+    getTileColor(value) {
+        switch(value) {
+            case 0:
+                return std.color.tileEmpty;
+            case 2:
+                return std.color.paleBeige;
+            case 4:
+                return std.color.creamBeige;
+            case 8:
+                return std.color.apricotOrange;
+            case 16:
+                return std.color.salmonOrange;
+            case 32:
+                return std.color.coralOrange;
+            case 64:
+                return std.color.orangeRed;
+            case 128:
+                return std.color.goldenYellow;
+            case 256:
+                return std.color.mustardYellow;
+            case 512:
+                return std.color.deepGoldenYellow;
+            case 1024:
+                return std.color.gold;
+            case 2048:
+                return std.color.brightGold;
+            default:
+                return std.color.darkCharcoal;
+        }
+    }
+
+    // menentukan koordinat tile pada canvas
+    getCellCoords(row,col) {
+        let coords = [x,y];
+        let x = this.boardX + this.gap + col * (this.cellSize + this.gap);
+        let y = this.boardY + this.gap + row * (this.cellSize + this.gap);
+        coords.x = x;
+        coords.y = y;
+        return coords;
+    }
+}
