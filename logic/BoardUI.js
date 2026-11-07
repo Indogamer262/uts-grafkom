@@ -72,6 +72,18 @@ export default class BoardUI {
         this.cgl.polygon(borderPoints,std.color.black);
     }
 
+    // menggambar tile pada papan permainan
+    drawTile(x,y,size,value) {
+        this.cgl.kotak(x,y,size,size,this.getTileColor(value));
+        let tileBorder = [
+            [x, y],
+            [x + size, y],
+            [x + size, y + size],
+            [x, y + size]
+        ];
+        this.cgl.polygon(tileBorder,std.color.black);
+    }
+
     main() {
         this.drawBackground();
         this.context.putImageData(this.image_data,0,0);
