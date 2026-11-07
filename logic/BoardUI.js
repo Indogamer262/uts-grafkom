@@ -51,11 +51,29 @@ export default class BoardUI {
 
     // menentukan koordinat tile pada canvas
     getCellCoords(row,col) {
-        let coords = [x,y];
         let x = this.boardX + this.gap + col * (this.cellSize + this.gap);
         let y = this.boardY + this.gap + row * (this.cellSize + this.gap);
+        let coords = [x,y];
         coords.x = x;
         coords.y = y;
         return coords;
+    }
+
+    // menggambar latar belakang permainan
+    drawBackground() {
+        this.cgl.clearCanvas();
+        this.cgl.kotak(this.boardX, this.boardY, this.boardSize, this.boardSize, std.color.darkGray);
+        let borderPoints = [
+            [this.boardX, this.boardY],
+            [this.boardX + this.boardSize, this.boardY],
+            [this.boardX + this.boardSize, this.boardY + this.boardSize],
+            [this.boardX, this.boardY + this.boardSize]
+        ];
+        this.cgl.polygon(borderPoints,std.color.black);
+    }
+
+    main() {
+        this.drawBackground();
+        this.context.putImageData(this.image_data,0,0);
     }
 }
