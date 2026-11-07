@@ -84,6 +84,23 @@ export default class BoardUI {
         this.cgl.polygon(tileBorder,std.color.black);
     }
 
+    // menggambar seluruh grid tile pada papan permainan
+    drawBoardGrid(grid,fontAnimInstance) {
+        for (let row = 0; row < 4; row++) {
+            for (let col = 0; col < 4; col++) {
+                let pos = this.getCellCoords(row,col);
+                let value = grid[row][col];
+                this.drawTile(pos[0],pos[1],this.cellSize,value);
+
+                if (value > 0) {
+                    let centerX = Math.floor(pos[0] + this.cellSize / 2);
+                    let centerY = Math.floor(pos[1] + this.cellSize / 2);
+                    // fontAnimInstance.drawNumberCentered(value,centerX,centerY,std.color.darkCharcoal);
+                }
+            }
+        }
+    }
+
     main() {
         this.drawBackground();
         this.context.putImageData(this.image_data,0,0);
