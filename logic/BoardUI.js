@@ -101,6 +101,25 @@ export default class BoardUI {
         }
     }
 
+    // menggambar panel skor
+    drawScorePanel(score,fontAnimInstance) {
+        let panelX = 460;
+        let panelY = 50;
+        let panelWidth = 120;
+        let panelHeight = 80;
+
+        this.cgl.kotak(panelX,panelY,panelWidth,panelHeight,std.color.darkGray);
+        let borderPoints = [
+            [panelX, panelY],
+            [panelX + panelWidth, panelY],
+            [panelX + panelWidth, panelY + panelHeight],
+            [panelX, panelY + panelHeight]
+        ];
+        this.cgl.polygon(borderPoints,std.color.black);
+        // fontAnimInstance.drawText("SCORE", panelX + 25, panelY + 25, 1, std.color.white);
+        // fontAnimInstance.drawText(String(score), panelX + 35, panelY + 55, 1, std.color.white);
+    }
+
     main() {
         this.drawBackground();
         this.context.putImageData(this.image_data,0,0);
