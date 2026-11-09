@@ -25,7 +25,7 @@ import * as std from "./lib/std.js"
 // LOGIC INTEGRATION
 // ===========================================================
 // internal
-import Run from "./Run.js"
+//import Run from "./Run.js"
 
 // external
 import Template from "./logic/template.js"
@@ -54,7 +54,7 @@ const la = {
 
 // Create objects for each logic script
 // internal
-let run = new Run(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+//let run = new Run(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 // external
 let template = new Template(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 let scene = new Scene(la.cw, la.ch, la.imgd, la.ctx, la.lib);
@@ -69,17 +69,18 @@ let fontAnim = new FontAnim(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 //template.main();
 //scene.main();
 
-//gameLogic.main();
-//gameLogic.main.initGame();
+gameLogic.main(boardUI, fontAnim);
 //boardUI.main();
 
+/*
 let logic = {
     gameLogic: gameLogic,
     boardUI: boardUI,
     fontAnim: fontAnim
 }
+*/
 
-run.run(logic);
+//run.run(logic);
 
 // draw changes to canvas
 context.putImageData(image_data, 0, 0);

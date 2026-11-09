@@ -19,7 +19,10 @@ export default class GameLogic { // membuat class GameLogic
 
     // MERESET GRID MENJADI 0 
     initGame() { // fungsi untuk mengiinisiasi awal game
-        this.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        this.grid = [[0, 0, 0, 0], 
+                     [0, 0, 0, 0],
+                     [0, 0, 0, 0],
+                     [0, 0, 0, 0]];
         this.score = 0;
         this.status = "PLAYING";
         for (let i = 0; i < 2; i++) { // perulangan 2 kali untuk memunculkan 2 angka pertama
