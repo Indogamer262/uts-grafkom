@@ -24,8 +24,14 @@ import * as std from "./lib/std.js"
 // ===========================================================
 // LOGIC INTEGRATION
 // ===========================================================
+// internal
+import Run from "./Run.js"
+
+// external
 import Template from "./logic/template.js"
 import Scene from "./logic/Scene.js"
+import GameLogic from "./logic/GameLogic.js"
+import BoardUI from "./logic/BoardUI.js"
 
 // ===========================================================
 // OBJECT DECLARATION
@@ -46,15 +52,31 @@ const la = {
 }
 
 // Create objects for each logic script
+// internal
+let run = new Run(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+// external
 let template = new Template(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 let scene = new Scene(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+let gameLogic = new GameLogic(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+let boardUI = new BoardUI(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 
 // ===========================================================
 // Drawing Workspace
 // ===========================================================
 // execute main from each logic scripts
 //template.main();
-scene.main();
+//scene.main();
+
+//gameLogic.main();
+//gameLogic.main.initGame();
+//boardUI.main();
+
+let logic = {
+    gameLogic: gameLogic,
+    boardUI: boardUI
+}
+
+run.run(logic);
 
 // draw changes to canvas
 context.putImageData(image_data, 0, 0);
