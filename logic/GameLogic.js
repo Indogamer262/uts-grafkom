@@ -138,7 +138,7 @@ export default class GameLogic { // membuat class GameLogic
         document.getElementById("downBtn").addEventListener("click", () => { this.move("down");this.updateUI(); });
         document.getElementById("leftBtn").addEventListener("click", () => { this.move("left");this.updateUI(); });
         document.getElementById("rightBtn").addEventListener("click", () => { this.move("right");this.updateUI(); });
-        document.getElementById("restartBtn").addEventListener("click", () => { this.initGame(); });
+        document.getElementById("restartBtn").addEventListener("click", () => { this.initGame();this.updateUI(); });
         document.addEventListener("keydown", (e) => {
             if (e.key === "ArrowUp") {
                 this.move("up");
