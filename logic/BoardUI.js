@@ -10,6 +10,7 @@ export default class BoardUI {
         this.cgl = lib.cgl;
         this.cmx = lib.cmx;
 
+        // menentukan posisi dan ukuran papan permainan
         this.boardX = 50;
         this.boardY = 50;
         this.boardSize = 400;
@@ -17,7 +18,7 @@ export default class BoardUI {
         this.gap = 12;
     }
 
-    // menentukan warna tile
+    // menentukan warna tile sesuai dengan valuenya
     getTileColor(value) {
         switch(value) {
             case 0:
@@ -49,17 +50,19 @@ export default class BoardUI {
         }
     }
 
-    // menentukan koordinat tile pada canvas
+    // menentukan koordinat tile berdasarkan baris dan kolom
     getCellCoords(row,col) {
         let x = this.boardX + this.gap + col * (this.cellSize + this.gap);
         let y = this.boardY + this.gap + row * (this.cellSize + this.gap);
         return [x,y];
     }
 
-    // menggambar latar belakang permainan
+    // menggambar background papan permainan
     drawBackground() {
         this.cgl.clearCanvas();
         this.cgl.kotak(this.boardX, this.boardY, this.boardSize, this.boardSize, std.color.darkGray);
+
+        // menentukan titik untuk garis tepi papan
         let borderPoints = [
             [this.boardX, this.boardY],
             [this.boardX + this.boardSize, this.boardY],
@@ -69,9 +72,11 @@ export default class BoardUI {
         this.cgl.polygon(borderPoints,std.color.black);
     }
 
-    // menggambar tile pada papan permainan
+    // menggambar satu kotak tile beserta garis tepinya
     drawTile(x,y,size,value) {
         this.cgl.kotak(x, y, size, size, this.getTileColor(value));
+
+        // menentukan titik untuk garis tepi tile
         let tileBorder = [
             [x, y],
             [x + size, y],
@@ -81,14 +86,16 @@ export default class BoardUI {
         this.cgl.polygon(tileBorder,std.color.black);
     }
 
-    // menggambar seluruh grid tile pada papan permainan
+    // menggambar seluruh grid tile (4x4) beserta valuenya pada papan permainan
     drawBoardGrid(grid,fontAnimInstance) {
         for (let row = 0; row < 4; row++) {
             for (let col = 0; col < 4; col++) {
+                // mengambil posisi dan nilai tile
                 let pos = this.getCellCoords(row,col);
                 let value = grid[row][col];
                 this.drawTile(pos[0],pos[1],this.cellSize,value);
 
+                // menggambar angka jika tile tidak kosong
                 if (value > 0) {
                     let centerX = Math.floor(pos[0] + this.cellSize / 2);
                     let centerY = Math.floor(pos[1] + this.cellSize / 2);
@@ -104,8 +111,9 @@ export default class BoardUI {
         let panelY = 50;
         let panelWidth = 120;
         let panelHeight = 80;
-
         this.cgl.kotak(panelX, panelY, panelWidth, panelHeight, std.color.darkGray);
+
+        // menentukan titik untuk garis tepi panel
         let borderPoints = [
             [panelX, panelY],
             [panelX + panelWidth, panelY],
@@ -113,11 +121,13 @@ export default class BoardUI {
             [panelX, panelY + panelHeight]
         ];
         this.cgl.polygon(borderPoints,std.color.black);
+
+        // menampilkan tulisan SCORE dan nilainya
         fontAnimInstance.drawText("SCORE", panelX + 25, panelY + 25, 1, std.color.white);
         fontAnimInstance.drawText(String(score), panelX + 35, panelY + 55, 1, std.color.white);
     }
 
-    // menggambar banner status menang atau selesai (gameover)
+    // menggambar banner jika pemain menang atau permainan selesai
     drawStatusOverlay(status,fontAnimInstance) {
         if (status === "WIN" || status === "GAMEOVER") {
             let bannerWidth = 300;
@@ -128,6 +138,7 @@ export default class BoardUI {
             let textColor;
             let text;
 
+            // menentukan warna dan tulisan sesuai dengan status permainan
             if (status === "WIN") {
                 bannerColor = std.color.goldenYellow;
                 textColor = std.color.darkCharcoal;
@@ -137,8 +148,9 @@ export default class BoardUI {
                 textColor = std.color.white;
                 text = "GAME OVER";
             }
-
             this.cgl.kotak(bannerX, bannerY, bannerWidth, bannerHeight, bannerColor);
+
+            // menentukan titik untuk garis tepi banner
             let borderPoints = [
                 [bannerX, bannerY],
                 [bannerX + bannerWidth, bannerY],
@@ -146,10 +158,13 @@ export default class BoardUI {
                 [bannerX, bannerY + bannerHeight]
             ];
             this.cgl.polygon(borderPoints,std.color.black);
+
+            // menampilkan tulisan status permainan
             fontAnimInstance.drawText(text, bannerX + 50, bannerY + 45, 1, textColor);
         }
     }
 
+    // menggambar tampilan permainan
     main(grid,score,status,fontAnimInstance) {
         this.drawBackground();
         this.drawBoardGrid(grid,fontAnimInstance);
