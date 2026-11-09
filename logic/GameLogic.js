@@ -90,27 +90,27 @@ export default class GameLogic { // membuat class GameLogic
     move(direction) {
         for (let i = 0; i < 4; i++) {  //pengulangan 4 kali buat poses baris/kolom
             if (direction == "left") {
-                this.grid[i] = slideAndMergeRow(this.grid[i]);
+                this.grid[i] = this.slideAndMergeRow(this.grid[i]);
             } else if (direction == "right") {
                 let reversedRow = this.grid[i].reverse();
-                reversedRow = slideAndMergeRow(reversedRow);
+                reversedRow = this.slideAndMergeRow(reversedRow);
                 this.grid[i] = reversedRow.reverse();
             } else if (direction == "up") {
                 let col = [this.grid[0][i], this.grid[1][i], this.grid[2][i], this.grid[3][i]];
-                col = slideAndMergeRow(col);
+                col = this.slideAndMergeRow(col);
                 for (let j = 0; j < 4; j++) {
                     this.grid[j][i] = col[j];
                 }
             } else if (direction == "down") {
                 let col = [this.grid[0][i], this.grid[1][i], this.grid[2][i], this.grid[3][i]];
-                col = slideAndMergeRow(col.reverse()).reverse();
+                col = this.slideAndMergeRow(col.reverse()).reverse();
                 for (let j = 0; j < 4; j++) {
                     this.grid[j][i] = col[j];
                 }
             }
         }
-        spawnRandomTile(); // munculkan 1 angka acak baru setelah papan digeser
-        checkGameStatus(); // cek apakah sudah menang/game over
+        this.spawnRandomTile(); // munculkan 1 angka acak baru setelah papan digeser
+        this.checkGameStatus(); // cek apakah sudah menang/game over
     }
 
     //CEK GAME STATUS APAKAH WIN ATAU GAME OVER
@@ -129,31 +129,46 @@ export default class GameLogic { // membuat class GameLogic
                 }
             }
         }
-        this.status = "GAME OVER";
+        this.status = "GAMEOVER";
     }
 
     //MENGHUBUNGKAN 5 TOMBOL YANG ADA DI INDEX.HTML DENGAN FUNGSI YANG ADA DI ATAS
     bindInputs() {
-        document.getElementById("upBtn").addEventListener("click", () => { move("up"); });
-        document.getElementById("downBtn").addEventListener("click", () => { move("down"); });
-        document.getElementById("leftBtn").addEventListener("click", () => { move("left"); });
-        document.getElementById("rightBtn").addEventListener("click", () => { move("right"); });
-        document.getElementById("restartBtn").addEventListener("click", () => { initGame(); });
+        document.getElementById("upBtn").addEventListener("click", () => { this.move("up");this.updateUI(); });
+        document.getElementById("downBtn").addEventListener("click", () => { this.move("down");this.updateUI(); });
+        document.getElementById("leftBtn").addEventListener("click", () => { this.move("left");this.updateUI(); });
+        document.getElementById("rightBtn").addEventListener("click", () => { this.move("right");this.updateUI(); });
+        document.getElementById("restartBtn").addEventListener("click", () => { this.initGame(); });
         document.addEventListener("keydown", (e) => {
             if (e.key === "ArrowUp") {
-                move("up");
+                this.move("up");
+                this.updateUI();
             } else if (e.key === "ArrowDown") {
-                move("down");
+                this.move("down");
+                this.updateUI();
             } else if (e.key === "ArrowLeft") {
-                move("left");
+                this.move("left");
+                this.updateUI();
             } else if (e.key === "ArrowRight") {
-                move("right");
+                this.move("right");
+                this.updateUI();
             }
         });
     }
+
+    // update to the Kevin's BoardUI
+    // intinya mah kasih tau BoardUI yang punyanya kevin, ada state baru, biar dia ngeupdate tampilannya
+    updateUI() {
+        this.boardUI.main(this.grid, this.score, this.status, this.fontAnim);
+    }
     
-    main() {
+    main(boardUI, fontAnim) {
         this.bindInputs(); // aktifkan semua tombol kontrolnya
         this.initGame(); // mulai permainan pertama kali
+
+        this.boardUI = boardUI
+        this.fontAnim = fontAnim
+
+        this.updateUI(boardUI, fontAnim);
     }
 }

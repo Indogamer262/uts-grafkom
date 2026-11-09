@@ -10,21 +10,21 @@ export default class Run {
         this.cgl = lib.cgl;
         this.cmx = lib.cmx;
 
-        this.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]; // papan 2048 ukuran 4x4, angka 0 = kotak kosong
-        this.score = 0;
-        this.status = "PLAYING";
-        this.isAnimating = false;
+        //this.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]; // papan 2048 ukuran 4x4, angka 0 = kotak kosong
+        //this.score = 0;
+        //this.status = "PLAYING";
+        //this.isAnimating = false;
     }
 
     run(logic) {
-        logic.gameLogic.initGame();
+        logic.gameLogic.main(logic.boardUI, logic.fontAnim);
 
-        let stat = logic.gameLogic.getGameStat();
-        this.grid = stat.grid;
-        this.score = stat.score;
-        this.status = stat.status;
-        this.isAnimating = stat.isAnimating;
+        //let stat = logic.gameLogic.getGameStat();
+        //this.grid = stat.grid;
+        //this.score = stat.score;
+        //this.status = stat.status;
+        //this.isAnimating = stat.isAnimating;
 
-        logic.boardUI.main(this.grid, this.score, this.status, logic.fontAnim)
+        //logic.boardUI.main(this.grid, this.score, this.status, logic.fontAnim);
     }
 }
