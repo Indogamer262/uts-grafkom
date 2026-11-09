@@ -120,6 +120,39 @@ export default class BoardUI {
         // fontAnimInstance.drawText(String(score), panelX + 35, panelY + 55, 1, std.color.white);
     }
 
+    // menggambar banner status menang atau selesai (gameover)
+    drawStatusOverlay(status,fontAnimInstance) {
+        if (status === "WIN" || status === "GAMEOVER") {
+            let bannerWidth = 300;
+            let bannerHeight = 100;
+            let bannerX = this.boardX + Math.floor((this.boardSize - bannerWidth) / 2);
+            let bannerY = this.boardY + Math.floor((this.boardSize - bannerHeight) / 2);
+            let bannerColor;
+            let textColor;
+            let text;
+
+            if (status === "WIN") {
+                bannerColor = std.color.goldenYellow;
+                textColor = std.color.darkCharcoal;
+                text = "YOU WIN";
+            } else {
+                bannerColor = std.color.darkCharcoal;
+                textColor = std.color.white;
+                text = "GAME OVER";
+            }
+
+            this.cgl.kotak(bannerX,bannerY,bannerWidth,bannerHeight,bannerColor);
+            let borderPoints = [
+                [bannerX, bannerY],
+                [bannerX + bannerWidth, bannerY],
+                [bannerX + bannerWidth, bannerY + bannerHeight],
+                [bannerX, bannerY + bannerHeight]
+            ];
+            this.cgl.polygon(borderPoints,std.color.black);
+            // fontAnimInstance.drawText(text, bannerX + 50, bannerY + 45, 1, textColor);
+        }
+    }
+
     main() {
         this.drawBackground();
         this.context.putImageData(this.image_data,0,0);
