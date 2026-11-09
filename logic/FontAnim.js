@@ -233,4 +233,113 @@ export default class FontAnim {
             this.drawChar(str[i], charX, centerY, scale, color);
         }
     }
+
+    // Gambar teks strings
+    drawText(textString, x, y, scale, color) {
+        let str = String(textString);
+        let stepX = (this.charWidth + this.charSpacing) * scale;
+
+        for (let i = 0; i < str.length; i++) {
+            let charX = Math.round(x + i * stepX);
+            this.drawChar(str[i], charX, y, scale, color);
+        }
+    }
+
+    // Animasi Sliding
+    animateSlide(movements, boardUI, gridState, onComplete) {
+        if (!movements || movements.length === 0) {
+            if (onComplete) 
+                onComplete();
+            return;
+        }
+
+        let frame = 0;
+        let totalFrames = 6;
+
+        const step = () => {
+            frame++;
+            let progress = frame / totalFrames;
+
+            if (boardUI) {
+                boardUI.drawBackground();
+                if (gridState) {
+                    boardUI.drawBoardGrid(gridState, this);
+                }
+            }
+
+            // Translasi
+            for (let i = 0; i < movements.length; i++) {
+                let move = movements[i];
+                let tx = (move.toX - move.fromX) * progress;
+                let ty = (move.toY - move.fromY) * progress;
+
+                let matTrans = this.cmx.create_translation(tx, ty);
+                let currentPos = this.cmx.transform_point([move.fromX, move.fromY], matTrans);
+
+                let tileSize = boardUI ? boardUI.cellSize : 85;
+                if (boardUI) {
+                    boardUI.drawTile(currentPos[0], currentPos[1], tileSize, move.value);
+                } else {
+                    this.cgl.kotak(currentPos[0], currentPos[1], tileSize, tileSize, std.color.beige);
+                }
+
+                if (move.value > 0) {
+                    let centerX = Math.floor(currentPos[0] + tileSize / 2);
+                    let centerY = Math.floor(currentPos[1] + tileSize / 2);
+                    this.drawNumberCentered(move.value, centerX, centerY, std.color.black);
+                }
+            }
+
+            this.context.putImageData(this.image_data, 0, 0);
+
+            if (frame < totalFrames) {
+                requestAnimationFrame(step);
+            } else if (onComplete) {
+                onComplete();
+            }
+        };
+        requestAnimationFrame(step);
+    }
+
+    // Animasi scaling (untuk popup)
+    animateSpawnOrMerge(cx, cy, baseSize, color, value, onComplete) {
+        let frame = 0;
+        let totalFrames = 6;
+        let half = Math.floor(baseSize / 2);
+
+        // 4 titik sudut kotak tile
+        let baseCorners = [
+            [cx - half, cy - half],
+            [cx + half, cy - half],
+            [cx + half, cy + half],
+            [cx - half, cy + half]
+        ];
+
+        const step = () => {
+            frame++;
+            let scale = 0.5 + 0.5 * (frame / totalFrames);
+
+            // Refresh tile
+            this.cgl.kotak(cx - half, cy - half, baseSize, baseSize, std.color.darkGray);
+
+            // Fixed-point scaling
+            let matScale = this.cmx.create_fixedp_scale(cx, cy, scale, scale); // Pusat cx, cy
+            let scaledCorners = this.cmx.execute_transform_points(baseCorners, matScale);
+
+            this.cgl.polygon_color_bound(scaledCorners, std.color.black, color);
+
+            if (value > 0) {
+                this.drawNumberCentered(value, cx, cy, std.color.black);
+            }
+
+            this.context.putImageData(this.image_data, 0, 0);
+
+            if (frame < totalFrames) {
+                requestAnimationFrame(step);
+            } else if (onComplete) {
+                onComplete();
+            }
+        };
+        requestAnimationFrame(step);
+    }
 }
