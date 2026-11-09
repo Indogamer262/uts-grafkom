@@ -246,6 +246,7 @@ export default class FontAnim {
     }
 
     // Animasi Sliding
+    // movements --> {[fromX:, fromY:, toX:, toY:, value:], [...]}
     animateSlide(movements, boardUI, gridState, onComplete) {
         if (!movements || movements.length === 0) {
             if (onComplete) 

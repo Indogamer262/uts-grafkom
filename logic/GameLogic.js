@@ -53,12 +53,15 @@ export default class GameLogic { // membuat class GameLogic
             let randomIndex = this.cgl.randomInt(0, emptyCells.length - 1);
             let row = emptyCells[randomIndex][0];
             let col = emptyCells[randomIndex][1];
+            let val = null;
             if (this.cgl.randomInt(1, 10) <= 9) {
-                this.grid[row][col] = 2;
+                val = 2;
+                this.grid[row][col] = val;
             } else { // kalau keluar angka 10
-                this.grid[row][col] = 4;
+                val = 4;
+                this.grid[row][col] = val;
             }
-            return [row, col, this.grid[row][col]];
+            return [row, col, val, this.grid[row][col]];
         }
     }
 
@@ -112,7 +115,16 @@ export default class GameLogic { // membuat class GameLogic
                 }
             }
         }
-        this.spawnRandomTile(); // munculkan 1 angka acak baru setelah papan digeser
+
+        // MOVE ANIMATION
+        
+        
+        // SPAWNING ANIMATION
+        let spawnPos = this.spawnRandomTile(); // munculkan 1 angka acak baru setelah papan digeser
+        let cellPos = this.boardUI.getCellCoords(spawnPos[0],spawnPos[1]);
+        let value = spawnPos[2];
+        this.fontAnim.animateSpawnOrMerge(cellPos[0]+42, cellPos[1]+42, 85, this.boardUI.getTileColor(value), value, () => {});
+        
         this.checkGameStatus(); // cek apakah sudah menang/game over
     }
 
