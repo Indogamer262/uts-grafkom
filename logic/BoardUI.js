@@ -53,10 +53,7 @@ export default class BoardUI {
     getCellCoords(row,col) {
         let x = this.boardX + this.gap + col * (this.cellSize + this.gap);
         let y = this.boardY + this.gap + row * (this.cellSize + this.gap);
-        let coords = [x,y];
-        coords.x = x;
-        coords.y = y;
-        return coords;
+        return [x,y];
     }
 
     // menggambar latar belakang permainan
@@ -74,7 +71,7 @@ export default class BoardUI {
 
     // menggambar tile pada papan permainan
     drawTile(x,y,size,value) {
-        this.cgl.kotak(x,y,size,size,this.getTileColor(value));
+        this.cgl.kotak(x, y, size, size, this.getTileColor(value));
         let tileBorder = [
             [x, y],
             [x + size, y],
@@ -95,7 +92,7 @@ export default class BoardUI {
                 if (value > 0) {
                     let centerX = Math.floor(pos[0] + this.cellSize / 2);
                     let centerY = Math.floor(pos[1] + this.cellSize / 2);
-                    // fontAnimInstance.drawNumberCentered(value,centerX,centerY,std.color.darkCharcoal);
+                    fontAnimInstance.drawNumberCentered(value,centerX,centerY,std.color.darkCharcoal);
                 }
             }
         }
@@ -108,7 +105,7 @@ export default class BoardUI {
         let panelWidth = 120;
         let panelHeight = 80;
 
-        this.cgl.kotak(panelX,panelY,panelWidth,panelHeight,std.color.darkGray);
+        this.cgl.kotak(panelX, panelY, panelWidth, panelHeight, std.color.darkGray);
         let borderPoints = [
             [panelX, panelY],
             [panelX + panelWidth, panelY],
@@ -116,8 +113,8 @@ export default class BoardUI {
             [panelX, panelY + panelHeight]
         ];
         this.cgl.polygon(borderPoints,std.color.black);
-        // fontAnimInstance.drawText("SCORE", panelX + 25, panelY + 25, 1, std.color.white);
-        // fontAnimInstance.drawText(String(score), panelX + 35, panelY + 55, 1, std.color.white);
+        fontAnimInstance.drawText("SCORE", panelX + 25, panelY + 25, 1, std.color.white);
+        fontAnimInstance.drawText(String(score), panelX + 35, panelY + 55, 1, std.color.white);
     }
 
     // menggambar banner status menang atau selesai (gameover)
@@ -141,7 +138,7 @@ export default class BoardUI {
                 text = "GAME OVER";
             }
 
-            this.cgl.kotak(bannerX,bannerY,bannerWidth,bannerHeight,bannerColor);
+            this.cgl.kotak(bannerX, bannerY, bannerWidth, bannerHeight, bannerColor);
             let borderPoints = [
                 [bannerX, bannerY],
                 [bannerX + bannerWidth, bannerY],
@@ -149,12 +146,15 @@ export default class BoardUI {
                 [bannerX, bannerY + bannerHeight]
             ];
             this.cgl.polygon(borderPoints,std.color.black);
-            // fontAnimInstance.drawText(text, bannerX + 50, bannerY + 45, 1, textColor);
+            fontAnimInstance.drawText(text, bannerX + 50, bannerY + 45, 1, textColor);
         }
     }
 
-    main() {
+    main(grid,score,status,fontAnimInstance) {
         this.drawBackground();
+        this.drawBoardGrid(grid,fontAnimInstance);
+        this.drawScorePanel(score,fontAnimInstance);
+        this.drawStatusOverlay(status,fontAnimInstance);
         this.context.putImageData(this.image_data,0,0);
     }
 }
