@@ -25,6 +25,6 @@ export default class Run {
         this.status = stat.status;
         this.isAnimating = stat.isAnimating;
 
-        logic.boardUI.main(this.grid, this.score, this.status, this.context)
+        logic.boardUI.main(this.grid, this.score, this.status, logic.fontAnim)
     }
 }

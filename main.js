@@ -32,6 +32,7 @@ import Template from "./logic/template.js"
 import Scene from "./logic/Scene.js"
 import GameLogic from "./logic/GameLogic.js"
 import BoardUI from "./logic/BoardUI.js"
+import FontAnim from "./logic/FontAnim.js"
 
 // ===========================================================
 // OBJECT DECLARATION
@@ -59,6 +60,7 @@ let template = new Template(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 let scene = new Scene(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 let gameLogic = new GameLogic(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 let boardUI = new BoardUI(la.cw, la.ch, la.imgd, la.ctx, la.lib);
+let fontAnim = new FontAnim(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 
 // ===========================================================
 // Drawing Workspace
@@ -73,7 +75,8 @@ let boardUI = new BoardUI(la.cw, la.ch, la.imgd, la.ctx, la.lib);
 
 let logic = {
     gameLogic: gameLogic,
-    boardUI: boardUI
+    boardUI: boardUI,
+    fontAnim: fontAnim
 }
 
 run.run(logic);
